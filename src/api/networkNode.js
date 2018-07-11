@@ -1,10 +1,18 @@
+const exec          = require('child_process').exec;
 const uuid          = require('uuid/v1');
 const rp            = require('request-promise');
 const Blockchain    = require('../../blockchain');
 
 const nodeAddress   = uuid().split('-').join('');
-
 const nickcoin      = new Blockchain();
+
+const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
+const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
 module.exports = (app) => {
     app.get('/blockchain', (req, res) => {
@@ -214,6 +222,25 @@ module.exports = (app) => {
         console.log(ip);
         res.json({ip: ip});
     });
+
+    app.get('/start', (req, res) => {
+        let ip = (req.headers['x-forwarded-for'] ||
+            req.connection.remoteAddress ||
+            req.socket.remoteAddress ||
+            req.connection.socket.remoteAddress).split(",")[0];
+        // execSync('nodemon --watch dev -e js index.js http://localhost:3001 3001');
+        exec(`node networkNode.js http://${ip}:3001 3001`, (error, stdout, stderr) => {
+            const port = 3001;
+            console.log(`stdout: ${stdout}`);
+            console.log(`stderr: ${stderr}`);
+            if (error !== null) {
+                console.log(`exec error: ${error}`);
+            };
+            app.listen(port, () => {
+                console.log('App listening on port ' + port);
+            });
+        });
+    })
     
     
     app.get('/block/:blockHash', (req, res) => {

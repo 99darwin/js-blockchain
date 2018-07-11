@@ -23,7 +23,14 @@ jQuery(
             .done(() => {
                 $('#node_registered').show();
             })
-            
+        })
+
+        $('#node_start').on('click', (e) => {
+            e.preventDefault();
+            $.get({url: '/start'})
+            .done(response => {
+                console.log(response)
+            })
         })
     })
 
