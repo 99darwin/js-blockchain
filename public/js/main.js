@@ -1,7 +1,7 @@
 jQuery(
 
     $(document).ready(() => {
-        
+
         let userIp = [];
         $.get({
             url: '/ip'
@@ -11,16 +11,7 @@ jQuery(
         });
 
         $('#register').on('click', () => {
-            $.post(
-                '/register-and-broadcast-node',
-                {
-                    'newNodeUrl': 'https://' + userIp[0].host
-                },
-                (data) => {
-                    console.log(data);
-                    $('#node_registered').show();
-                }
-            );
+            $('#node_registered').show();
         })
     })
 
