@@ -11,8 +11,19 @@ jQuery(
             console.log(userIp);
         });
 
-        $('#register').on('click', () => {
-            $('#node_registered').show();
+        $('#register-node').submit((e) => {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '/register-and-broadcast-node',
+                data: {
+                    newNodeUrl: 'https://' + userIp[0]
+                }
+            })
+            .done(() => {
+                $('#node_registered').show();
+            })
+            
         })
     })
 

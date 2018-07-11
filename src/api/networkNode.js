@@ -112,7 +112,7 @@ module.exports = (app) => {
     app.post('/register-and-broadcast-node', (req, res) => {
         const newNodeUrl = req.body.newNodeUrl;
         if (nickcoin.networkNodes.indexOf(newNodeUrl) == -1) nickcoin.networkNodes.push(newNodeUrl);
-        
+        console.log(newNodeUrl);
         const regNodesPromises = [];
         nickcoin.networkNodes.forEach(networkNodeUrl => {
             const options = {
