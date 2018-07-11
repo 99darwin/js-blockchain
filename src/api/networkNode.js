@@ -229,7 +229,7 @@ module.exports = (app) => {
             req.socket.remoteAddress ||
             req.connection.socket.remoteAddress).split(",")[0];
         // execSync('nodemon --watch dev -e js index.js http://localhost:3001 3001');
-        exec(`node networkNode.js http://${ip}:3001 3001`, (error, stdout, stderr) => {
+        exec(`node /src/api/networkNode.js http://${ip}:3001 3001`, (error, stdout, stderr) => {
             const port = 3001;
             console.log(`stdout: ${stdout}`);
             console.log(`stderr: ${stderr}`);
