@@ -6,6 +6,7 @@ jQuery(
         $.get({
             url: '/ip'
         }).done(response => {
+            $('#ip').val(response.ip);
             userIp.push(response.ip);
             console.log(userIp);
         });
